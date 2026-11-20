@@ -2,7 +2,7 @@ import { createElement as h } from "react";
 import { Column, Heading, Text } from "@hyper-elements/react";
 import { formatMoney, formatDate } from "./format";
 import { STATUS_COPY } from "./status";
-import type { Transaction } from "./types";
+import type { Brand, Transaction } from "./types";
 
 function detail(label: string, value: string, fontFamily: string) {
     return h(
@@ -13,7 +13,7 @@ function detail(label: string, value: string, fontFamily: string) {
     );
 }
 
-export function receiptBody(t: Transaction, fontFamily: string) {
+export function receiptBody(t: Transaction, brand: Brand, fontFamily: string) {
     const copy = STATUS_COPY[t.status];
 
     const rows = [
@@ -37,6 +37,7 @@ export function receiptBody(t: Transaction, fontFamily: string) {
     return h(
         Column,
         { style: { padding: 32, gap: 16 } },
+        h(Text, { style: { fontFamily, fontSize: 14, fontWeight: 700, color: brand.accentColor } }, brand.name),
         h(Heading, { level: 1, style: { fontFamily, fontSize: 20, fontWeight: 700, color: copy.color } }, copy.heading,),
         h(Text, { style: { fontFamily, fontSize: 16 } }, copy.summary(t)),
         h(
@@ -47,5 +48,7 @@ export function receiptBody(t: Transaction, fontFamily: string) {
         ),
         h(Text, { style: { fontFamily, fontSize: 14, color: "#374151" } }, copy.nextStep),
         ...rows,
+        h(Text, { style: { fontFamily, fontSize: 12, color: "#6b7280" } }, `Questions? ${brand.supportContact}`),
+        h(Text, { style: { fontFamily, fontSize: 12, fontWeight: 600, color: brand.accentColor } }, brand.footerLine),
     )
 }

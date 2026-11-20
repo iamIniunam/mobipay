@@ -1,3 +1,5 @@
+MobiPay
+
 PAYMENT PENDING
 
 Your payment of ₵125.50 to Kwame Boateng is still being processed.
@@ -31,3 +33,7 @@ MP-20261120-0043
 Note
 
 Lunch money
+
+Questions? help@mobipay.example
+
+MobiPay · Mobile money made simple

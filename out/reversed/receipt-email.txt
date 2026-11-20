@@ -1,3 +1,5 @@
+MobiPay
+
 PAYMENT REVERSED
 
 The ₵125.50 you sent to Kwame Boateng has been reversed.
@@ -35,3 +37,7 @@ MP-20261120-0045
 Note
 
 Lunch money
+
+Questions? help@mobipay.example
+
+MobiPay · Mobile money made simple

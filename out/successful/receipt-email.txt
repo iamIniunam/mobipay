@@ -1,3 +1,5 @@
+MobiPay
+
 PAYMENT SUCCESSFUL
 
 You sent ₵125.50 to Kwame Boateng.
@@ -39,3 +41,7 @@ MP-20261120-0042
 Note
 
 Lunch money
+
+Questions? help@mobipay.example
+
+MobiPay · Mobile money made simple

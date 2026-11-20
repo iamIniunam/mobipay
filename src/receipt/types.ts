@@ -16,3 +16,10 @@ export type Transaction = {
     note?: string; // optional, like String? in Dart
     reason?: string; // why it failed or was reversed
 }
+
+export type Brand = {
+    name: string;
+    accentColor: string;    // hex, e.g. "#0B6E4F"
+    supportContact: string; // e.g. "help@mobipay.app"
+    footerLine: string;
+}

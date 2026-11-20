@@ -1,3 +1,5 @@
+MobiPay
+
 PAYMENT FAILED
 
 We couldn't send ₵125.50 to Kwame Boateng.
@@ -35,3 +37,7 @@ MP-20261120-0044
 Note
 
 Lunch money
+
+Questions? help@mobipay.example
+
+MobiPay · Mobile money made simple
