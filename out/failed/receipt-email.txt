@@ -1,0 +1,37 @@
+PAYMENT FAILED
+
+We couldn't send ₵125.50 to Kwame Boateng.
+
+Amount attempted
+
+₵125.50
+
+No money was taken from your wallet. You can try again.
+
+To
+
+Kwame Boateng (+233 24 123 4567)
+
+From
+
+Ama Mensah
+
+Network
+
+MTN MoMo
+
+Reason
+
+Insufficient wallet balance
+
+Date
+
+20 Nov 2026, 14:32
+
+Reference
+
+MP-20261120-0044
+
+Note
+
+Lunch money
