@@ -1,6 +1,6 @@
 import { createElement as h } from "react";
 import { Canvas, Document, Email, Page } from "@hyper-elements/react";
-import { receiptBody } from "./body";
+import { receiptBody, receiptHeight } from "./body";
 import type { Brand, Transaction } from "./types";
 import { mobipayBrand } from "./brands";
 
@@ -19,4 +19,4 @@ export const pdfReceipt = (t: Transaction, brand: Brand = mobipayBrand) =>
     h(Document, null, receiptBody(t, brand, FILE_FONT));
 
 export const imageReceipt = (t: Transaction, brand: Brand = mobipayBrand) =>
-    h(Canvas, { width: 600, height: 900 }, receiptBody(t, brand, FILE_FONT));
+    h(Canvas, { width: 640, height: receiptHeight(t) }, receiptBody(t, brand, FILE_FONT));

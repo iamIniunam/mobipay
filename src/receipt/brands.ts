@@ -15,3 +15,5 @@ export const palmwireBrand: Brand = {
 };
 
 export const brands: Brand[] = [mobipayBrand, palmwireBrand];
+
+export const brandSlug = (b: Brand) => b.name.toLowerCase().replace(/\s+/g, "-");

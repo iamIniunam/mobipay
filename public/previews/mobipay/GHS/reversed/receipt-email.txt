@@ -1,0 +1,41 @@
+MobiPay
+
+Reversed
+
+₵125.50
+
+YOUR PAYMENT TO KWAME BOATENG WAS REVERSED.
+
+The money has been returned to your wallet. Quote the reference below if you contact support.
+
+Reason
+
+Recipient number could not be credited
+
+To
+
+Kwame Boateng (+233 24 123 4567)
+
+From
+
+Ama Mensah
+
+Network
+
+MTN MoMo
+
+Date
+
+20 Nov 2026, 14:32
+
+Reference
+
+MP-20261120-0045
+
+Note
+
+Lunch money
+
+Need help? help@mobipay.example
+
+MobiPay · Mobile money made simple

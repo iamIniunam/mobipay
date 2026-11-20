@@ -1,0 +1,41 @@
+MobiPay
+
+Failed
+
+₦25,000.00
+
+NOT SENT TO CHIDI OKAFOR.
+
+No money was taken from your wallet. You can try again.
+
+Reason
+
+Insufficient wallet balance
+
+To
+
+Chidi Okafor (+234 803 123 4567)
+
+From
+
+Ngozi Eze
+
+Network
+
+OPay
+
+Date
+
+20 Nov 2026, 14:32
+
+Reference
+
+MP-20261120-0044
+
+Note
+
+Lunch money
+
+Need help? help@mobipay.example
+
+MobiPay · Mobile money made simple

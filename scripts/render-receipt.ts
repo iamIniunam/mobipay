@@ -2,7 +2,9 @@ import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { render } from "@hyper-elements/react";
 import { renderPdf } from "@hyper-elements/react/pdf";
 import { renderImage } from "@hyper-elements/react/image";
-import { sampleTransactions } from "../src/receipt/sample";
+import { inCurrency, sampleTransactions } from "../src/receipt/sample";
+import { brands, brandSlug } from "../src/receipt/brands";
+import type { Currency } from "../src/receipt/types";
 import {
     emailReceipt,
     imageReceipt,
@@ -21,22 +23,29 @@ const fonts = fontFiles.map(([file, weight]) => ({
     weight,
 }));
 
-for (const [status, t] of Object.entries(sampleTransactions)) {
-    const dir = `out/${status}`;
-    mkdirSync(dir, { recursive: true });
+const currencies: Currency[] = ["GHS", "NGN", "USD"];
 
-    const email = await render(emailReceipt(t));
-    writeFileSync(`${dir}/receipt-email.html`, email.html);
-    writeFileSync(`${dir}/receipt-email.txt`, email.text);
+for (const brand of brands) {
+    for (const currency of currencies) {
+        for (const [status, base] of Object.entries(sampleTransactions)) {
+            const t = inCurrency(base, currency);
+            const dir = `public/previews/${brandSlug(brand)}/${currency}/${status}`;
+            mkdirSync(dir, { recursive: true });
 
-    const page = await render(pageReceipt(t));
-    writeFileSync(`${dir}/receipt-page.html`, page.html);
+            const email = await render(emailReceipt(t, brand));
+            writeFileSync(`${dir}/receipt-email.html`, email.html);
+            writeFileSync(`${dir}/receipt-email.txt`, email.text);
 
-    const { pdf } = await renderPdf(pdfReceipt(t), { fonts });
-    writeFileSync(`${dir}/receipt.pdf`, pdf);
+            const page = await render(pageReceipt(t, brand));
+            writeFileSync(`${dir}/receipt-page.html`, page.html);
 
-    const { image } = await renderImage(imageReceipt(t), { fonts, strict: true });
-    writeFileSync(`${dir}/receipt.png`, image);
+            const { pdf } = await renderPdf(pdfReceipt(t, brand), { fonts });
+            writeFileSync(`${dir}/receipt.pdf`, pdf);
 
-    console.log(status, "ok");
+            const { image } = await renderImage(imageReceipt(t, brand), { fonts, strict: true });
+            writeFileSync(`${dir}/receipt.png`, image);
+
+            console.log(dir, "ok");
+        }
+    }
 }
