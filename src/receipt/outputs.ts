@@ -19,4 +19,4 @@ export const pdfReceipt = (t: Transaction, brand: Brand = mobipayBrand) =>
     h(Document, null, receiptBody(t, brand, FILE_FONT));
 
 export const imageReceipt = (t: Transaction, brand: Brand = mobipayBrand) =>
-    h(Canvas, { width: 640, height: receiptHeight(t) }, receiptBody(t, brand, FILE_FONT));
+    h(Canvas, { width: 640, height: receiptHeight(t), style: { backgroundColor: "#FFFFFF" } }, receiptBody(t, brand, FILE_FONT));
