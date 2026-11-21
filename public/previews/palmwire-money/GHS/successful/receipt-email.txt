@@ -1,18 +1,28 @@
 Palmwire Money
 
+Transaction receipt
+
 Successful
+
+Completed 20 Nov 2026, 14:32 UTC
+
+Amount sent (GHS)
 
 ₵125.50
 
-SENT TO KWAME BOATENG.
+SENT TO KWAME BOATENG
 
-No further action is needed. Keep this receipt for your records.
+Payment complete. Keep this receipt for your records.
 
-To
+PAYMENT DETAILS
 
-Kwame Boateng (+233 24 123 4567)
+Recipient
 
-From
+Kwame Boateng
+
++233 24 123 4567
+
+Sender
 
 Ama Mensah
 
@@ -20,17 +30,21 @@ Network
 
 MTN MoMo
 
+CHARGES
+
 Fee
 
 ₵1.00
 
-Total
+Total debited
 
 ₵126.50
 
-Date
+TRANSACTION DETAILS
 
-20 Nov 2026, 14:32
+Initiated
+
+20 Nov 2026, 14:32 UTC
 
 Reference
 
@@ -40,6 +54,8 @@ Note
 
 Lunch money
 
-Need help? support@palmwire.example
+Need help? Quote your transaction reference.
+
+support@palmwire.example (mailto:support@palmwire.example?subject=Payment%20enquiry%3A%20MP-20261120-0042)
 
 Palmwire Money · Send. Save. Smile.

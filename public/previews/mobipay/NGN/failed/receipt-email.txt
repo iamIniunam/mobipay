@@ -1,22 +1,28 @@
 MobiPay
 
+Transaction receipt
+
 Failed
+
+Initiated 20 Nov 2026, 14:32 UTC
+
+Amount attempted (NGN)
 
 ₦25,000.00
 
-NOT SENT TO CHIDI OKAFOR.
+NOT SENT TO CHIDI OKAFOR
 
-No money was taken from your wallet. You can try again.
+No money was debited. Check the payment details before trying again.
 
-Reason
+PAYMENT DETAILS
 
-Insufficient wallet balance
+Recipient
 
-To
+Chidi Okafor
 
-Chidi Okafor (+234 803 123 4567)
++234 803 123 4567
 
-From
+Sender
 
 Ngozi Eze
 
@@ -24,9 +30,21 @@ Network
 
 OPay
 
-Date
+Reason
 
-20 Nov 2026, 14:32
+Insufficient wallet balance
+
+WALLET MOVEMENTS
+
+Total debited
+
+₦0.00
+
+TRANSACTION DETAILS
+
+Initiated
+
+20 Nov 2026, 14:32 UTC
 
 Reference
 
@@ -36,6 +54,8 @@ Note
 
 Lunch money
 
-Need help? help@mobipay.example
+Need help? Quote your transaction reference.
+
+help@mobipay.example (mailto:help@mobipay.example?subject=Payment%20enquiry%3A%20MP-20261120-0044)
 
 MobiPay · Mobile money made simple

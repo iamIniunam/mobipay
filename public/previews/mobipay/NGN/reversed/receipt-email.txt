@@ -1,22 +1,28 @@
 MobiPay
 
+Transaction receipt
+
 Reversed
+
+Reversed 20 Nov 2026, 14:35 UTC
+
+Original payment amount (NGN)
 
 ₦25,000.00
 
-YOUR PAYMENT TO CHIDI OKAFOR WAS REVERSED.
+PAYMENT TO CHIDI OKAFOR WAS REVERSED
 
-The money has been returned to your wallet. Quote the reference below if you contact support.
+The confirmed refund is listed below. Contact support with this reference if you need help.
 
-Reason
+PAYMENT DETAILS
 
-Recipient number could not be credited
+Recipient
 
-To
+Chidi Okafor
 
-Chidi Okafor (+234 803 123 4567)
++234 803 123 4567
 
-From
+Sender
 
 Ngozi Eze
 
@@ -24,9 +30,33 @@ Network
 
 OPay
 
-Date
+Reason
 
-20 Nov 2026, 14:32
+Recipient number could not be credited
+
+WALLET MOVEMENTS
+
+Total debited
+
+₦25,050.00
+
+Payment refunded
+
+₦25,000.00
+
+Fee refunded
+
+₦50.00
+
+Total refunded
+
+₦25,050.00
+
+TRANSACTION DETAILS
+
+Initiated
+
+20 Nov 2026, 14:32 UTC
 
 Reference
 
@@ -36,6 +66,8 @@ Note
 
 Lunch money
 
-Need help? help@mobipay.example
+Need help? Quote your transaction reference.
+
+help@mobipay.example (mailto:help@mobipay.example?subject=Payment%20enquiry%3A%20MP-20261120-0045)
 
 MobiPay · Mobile money made simple

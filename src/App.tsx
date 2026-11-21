@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { CSSProperties, SyntheticEvent } from "react";
 import { render } from "@hyper-elements/react";
 import { brandSlug, brands } from "./receipt/brands";
@@ -20,19 +20,30 @@ const BASE = import.meta.env.BASE_URL;
 const withInter = (html: string) =>
   html.replace("</head>", `<link rel="stylesheet" href="${BASE}fonts/inter.css"></head>`);
 
-// Grow the iframe to the receipt's height, so the page scrolls instead of the frame.
-function fitFrame(e: SyntheticEvent<HTMLIFrameElement>) {
-  const frame = e.currentTarget;
-  const doc = frame.contentDocument;
-  if (!doc) return;
-  const fit = () => {
-    frame.style.height = "0px"; // shrink first, or scrollHeight can't go below the old height
-    frame.style.height = `${doc.documentElement.scrollHeight}px`;
-  };
-  fit();
-  doc.fonts.ready.then(fit); // Inter arrives late and can change line wraps
-}
+// Observe the receipt itself: font loading, content changes and viewport resizing can reflow it.
+function ReceiptFrame({ html }: { html: string }) {
+  const cleanup = useRef<(() => void) | undefined>(undefined);
+  useEffect(() => () => cleanup.current?.(), []);
 
+  function fitFrame(e: SyntheticEvent<HTMLIFrameElement>) {
+    cleanup.current?.();
+    const frame = e.currentTarget;
+    const doc = frame.contentDocument;
+    const receipt = doc?.getElementById("receipt-body");
+    if (!doc || !receipt) return;
+    let active = true;
+    const fit = () => {
+      if (active) frame.style.height = `${Math.ceil(receipt.getBoundingClientRect().bottom + (doc.defaultView?.scrollY ?? 0))}px`;
+    };
+    const observer = new ResizeObserver(fit);
+    observer.observe(receipt);
+    cleanup.current = () => { active = false; observer.disconnect(); };
+    fit();
+    void doc.fonts.ready.then(fit);
+  }
+
+  return <iframe title="Receipt" srcDoc={html} onLoad={fitFrame} />;
+}
 export default function App() {
   const [status, setStatus] = useState<TransactionStatus>("successful");
   const [currency, setCurrency] = useState<Currency>("GHS");
@@ -96,7 +107,7 @@ export default function App() {
         </div>
 
         <div className="sheet">
-          {live && <iframe title="Receipt" srcDoc={html} onLoad={fitFrame} />}
+          {live && <ReceiptFrame html={html} />}
           {output === "pdf" && <iframe className="pdf" title="Receipt PDF" src={`${base}/receipt.pdf`} />}
           {output === "png" && (
             <img alt={`${brand.name} receipt, ${status}`} src={`${base}/receipt.png`} />

@@ -1,22 +1,28 @@
 Palmwire Money
 
+Transaction receipt
+
 Reversed
+
+Reversed 20 Nov 2026, 14:35 UTC
+
+Original payment amount (GHS)
 
 ₵125.50
 
-YOUR PAYMENT TO KWAME BOATENG WAS REVERSED.
+PAYMENT TO KWAME BOATENG WAS REVERSED
 
-The money has been returned to your wallet. Quote the reference below if you contact support.
+The confirmed refund is listed below. Contact support with this reference if you need help.
 
-Reason
+PAYMENT DETAILS
 
-Recipient number could not be credited
+Recipient
 
-To
+Kwame Boateng
 
-Kwame Boateng (+233 24 123 4567)
++233 24 123 4567
 
-From
+Sender
 
 Ama Mensah
 
@@ -24,9 +30,33 @@ Network
 
 MTN MoMo
 
-Date
+Reason
 
-20 Nov 2026, 14:32
+Recipient number could not be credited
+
+WALLET MOVEMENTS
+
+Total debited
+
+₵126.50
+
+Payment refunded
+
+₵125.50
+
+Fee refunded
+
+₵1.00
+
+Total refunded
+
+₵126.50
+
+TRANSACTION DETAILS
+
+Initiated
+
+20 Nov 2026, 14:32 UTC
 
 Reference
 
@@ -36,6 +66,8 @@ Note
 
 Lunch money
 
-Need help? support@palmwire.example
+Need help? Quote your transaction reference.
+
+support@palmwire.example (mailto:support@palmwire.example?subject=Payment%20enquiry%3A%20MP-20261120-0045)
 
 Palmwire Money · Send. Save. Smile.

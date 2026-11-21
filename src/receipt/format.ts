@@ -17,5 +17,5 @@ export function formatDate(iso: string): string {
         dateStyle: "medium",
         timeStyle: "short",
         timeZone: "UTC",
-    }).format(new Date(iso));
+    }).format(new Date(iso)) + " UTC";
 }

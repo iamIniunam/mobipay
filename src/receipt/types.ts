@@ -13,7 +13,13 @@ export type Transaction = {
     recipientNumber: string;
     network: string;
     createdAt: string; // ISO date string
-    note?: string; // optional, like String? in Dart
+    completedAt?: string;
+    reversedAt?: string;
+    // Recorded wallet movements. Omit unknown values; zero means confirmed zero.
+    debitedMinor?: number;
+    refundedAmountMinor?: number;
+    refundedFeeMinor?: number;
+    note?: string;
     reason?: string; // why it failed or was reversed
 }
 

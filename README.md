@@ -9,7 +9,7 @@ One mobile money receipt, rendered as an **email, web page, PDF and PNG** from a
 ## What it does
 
 - **One transaction, four outputs.** Email (HTML and plain text), web page, PDF and PNG all come from the same receipt definition.
-- **Wording follows the status.** Successful, pending, failed and reversed each get their own summary line and next-step callout. Failed and reversed receipts show a reason and mute the amount. Fee and total appear on successful payments only.
+- **Wording follows the status.** Successful, pending, failed and reversed each get their own summary line and next-step callout. Failed and reversed receipts show a reason and mute the amount. Recorded debits and refunds are shown explicitly; an unknown amount is never treated as zero.
 - **Mobile money context.** Network (MTN MoMo, OPay), recipient number, amounts stored in minor units and shown as ₵ (GHS), ₦ (NGN) or $ (USD).
 - **Brandable.** A `Brand` is a name, an accent colour, a support contact and a footer line. Two samples are included: MobiPay and the fictional Palmwire Money.
 
@@ -49,7 +49,7 @@ export const pdfReceipt = (t: Transaction, brand: Brand = mobipayBrand) =>
 // scripts/render-receipt.ts
 const email = await render(emailReceipt(t, brand));
 const { pdf } = await renderPdf(pdfReceipt(t, brand), { fonts });
-const { image } = await renderImage(imageReceipt(t, brand), { fonts, strict: true });
+const { image } = await renderReceiptImage(t, brand, { fonts });
 ```
 
 `render()` also runs in the browser, which is how the demo draws the email and web receipts live. The PDF and PNG renderers need Node, so those files are pre-rendered by `scripts/render-receipt.ts` and committed in `public/previews/` (2 brands × 3 currencies × 4 statuses = 24 receipts).
@@ -59,7 +59,7 @@ Things worth knowing if you build on this:
 - Style props that work in every output (email HTML, PDF, PNG): `backgroundColor`, `height`, `borderRadius` and `padding` on `Column`; percentage widths on `Row` and `Column`; `textAlign` on `Text`.
 - Some props are silently ignored: `alignSelf`, `textDecoration`, and the colour and thickness props on `Divider`. Hairline rules here are thin `Column`s with a background colour.
 - A `Canvas` is transparent unless you give it `style={{ backgroundColor }}`, so the PNG sets white explicitly.
-- `renderImage(..., { strict: true })` throws, with the pixel amount, when content would be cut off. That is how the PNG height is tuned.
+- `renderImage(..., { strict: true })` throws, with the pixel amount, when content would be cut off. `renderReceiptImage()` uses `layoutImage()` with the actual fonts to measure the receipt before rendering the PNG at its content height.
 - PDF and PNG fonts must be TTF, OTF or WOFF files (not WOFF2) passed to the renderer. Email and web use the font stack `Inter, Arial, Helvetica, sans-serif`.
 
 ## Project structure
@@ -71,12 +71,13 @@ src/
   receipt/
     types.ts           Transaction, TransactionStatus, Currency, Brand
     brands.ts          the two sample brands
-    sample.ts          one sample transaction per status, plus currency conversion
+    sample.ts          one sample transaction per status and currency (not FX conversion)
     format.ts          money and date formatting
     status.ts          per-status wording
     theme.ts           colours and status styles
     body.ts            the receipt, built from Hyper Elements components
     outputs.ts         emailReceipt, pageReceipt, pdfReceipt, imageReceipt
+    image.ts           Node-only PNG export, measured using actual font metrics
 scripts/
   render-receipt.ts    renders PDF and PNG (and email/web files) into public/previews
 public/previews/       pre-rendered receipts, one folder per brand / currency / status
@@ -96,7 +97,7 @@ npm run dev
 
 Open the URL Vite prints (`http://localhost:5173/mobipay/`).
 
-Other scripts: `npm run build`, `npm run preview` and `npm run lint`.
+Other scripts: `npm run build`, `npm run preview`, `npm run lint` and `npm test`. Tests cover debit wording, partial and unknown refunds, timestamps, sample currencies, optional details and long-content exports.
 
 To regenerate every PDF, PNG and email/web file:
 
@@ -111,6 +112,16 @@ rm -rf public/previews && npx tsx scripts/render-receipt.ts
 - **New wording:** edit `STATUS_COPY` in `status.ts`.
 
 Then regenerate the previews with the command above.
+
+## Transaction facts
+
+`amountMinor` is the requested payment amount; `feeMinor` is the payment fee. Supply `debitedMinor` from the wallet record to show **Total debited**. A failed status alone does not establish whether money was debited.
+
+`createdAt` is initiation time. Supply `completedAt` or `reversedAt` when available; the receipt labels the appropriate event near the status and formats every timestamp in UTC.
+
+For a reversed payment, `refundedAmountMinor` and `refundedFeeMinor` record the confirmed principal and fee returned. A zero is confirmed zero; an omitted field is unknown. **Total refunded** is shown only when both parts are known, so a partial refund or retained fee is represented accurately. The currency selector switches fictional sample scenarios; it does not convert real transactions.
+
+For PNG exports, import `renderReceiptImage` from `src/receipt/image.ts` in Node. It measures the shared body with the supplied fonts and returns the fitted image. `imageReceipt()` is the underlying measuring canvas, not the fitted export.
 
 ## Deployment
 

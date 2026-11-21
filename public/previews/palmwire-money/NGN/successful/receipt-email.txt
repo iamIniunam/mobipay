@@ -1,18 +1,28 @@
 Palmwire Money
 
+Transaction receipt
+
 Successful
+
+Completed 20 Nov 2026, 14:32 UTC
+
+Amount sent (NGN)
 
 ₦25,000.00
 
-SENT TO CHIDI OKAFOR.
+SENT TO CHIDI OKAFOR
 
-No further action is needed. Keep this receipt for your records.
+Payment complete. Keep this receipt for your records.
 
-To
+PAYMENT DETAILS
 
-Chidi Okafor (+234 803 123 4567)
+Recipient
 
-From
+Chidi Okafor
+
++234 803 123 4567
+
+Sender
 
 Ngozi Eze
 
@@ -20,17 +30,21 @@ Network
 
 OPay
 
+CHARGES
+
 Fee
 
 ₦50.00
 
-Total
+Total debited
 
 ₦25,050.00
 
-Date
+TRANSACTION DETAILS
 
-20 Nov 2026, 14:32
+Initiated
+
+20 Nov 2026, 14:32 UTC
 
 Reference
 
@@ -40,6 +54,8 @@ Note
 
 Lunch money
 
-Need help? support@palmwire.example
+Need help? Quote your transaction reference.
+
+support@palmwire.example (mailto:support@palmwire.example?subject=Payment%20enquiry%3A%20MP-20261120-0042)
 
 Palmwire Money · Send. Save. Smile.

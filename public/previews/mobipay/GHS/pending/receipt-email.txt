@@ -1,18 +1,28 @@
 MobiPay
 
+Transaction receipt
+
 Pending
+
+Initiated 20 Nov 2026, 14:32 UTC
+
+Amount requested (GHS)
 
 ₵125.50
 
-STILL BEING SENT TO KWAME BOATENG.
+PAYMENT TO KWAME BOATENG IS PROCESSING
 
-Please don't send it again. You'll get another message when it completes.
+Completion is not yet confirmed. Check the payment status before sending again.
 
-To
+PAYMENT DETAILS
 
-Kwame Boateng (+233 24 123 4567)
+Recipient
 
-From
+Kwame Boateng
+
++233 24 123 4567
+
+Sender
 
 Ama Mensah
 
@@ -20,9 +30,11 @@ Network
 
 MTN MoMo
 
-Date
+TRANSACTION DETAILS
 
-20 Nov 2026, 14:32
+Initiated
+
+20 Nov 2026, 14:32 UTC
 
 Reference
 
@@ -32,6 +44,8 @@ Note
 
 Lunch money
 
-Need help? help@mobipay.example
+Need help? Quote your transaction reference.
+
+help@mobipay.example (mailto:help@mobipay.example?subject=Payment%20enquiry%3A%20MP-20261120-0043)
 
 MobiPay · Mobile money made simple

@@ -1,22 +1,28 @@
 MobiPay
 
+Transaction receipt
+
 Failed
+
+Initiated 20 Nov 2026, 14:32 UTC
+
+Amount attempted (GHS)
 
 ₵125.50
 
-NOT SENT TO KWAME BOATENG.
+NOT SENT TO KWAME BOATENG
 
-No money was taken from your wallet. You can try again.
+No money was debited. Check the payment details before trying again.
 
-Reason
+PAYMENT DETAILS
 
-Insufficient wallet balance
+Recipient
 
-To
+Kwame Boateng
 
-Kwame Boateng (+233 24 123 4567)
++233 24 123 4567
 
-From
+Sender
 
 Ama Mensah
 
@@ -24,9 +30,21 @@ Network
 
 MTN MoMo
 
-Date
+Reason
 
-20 Nov 2026, 14:32
+Insufficient wallet balance
+
+WALLET MOVEMENTS
+
+Total debited
+
+₵0.00
+
+TRANSACTION DETAILS
+
+Initiated
+
+20 Nov 2026, 14:32 UTC
 
 Reference
 
@@ -36,6 +54,8 @@ Note
 
 Lunch money
 
-Need help? help@mobipay.example
+Need help? Quote your transaction reference.
+
+help@mobipay.example (mailto:help@mobipay.example?subject=Payment%20enquiry%3A%20MP-20261120-0044)
 
 MobiPay · Mobile money made simple

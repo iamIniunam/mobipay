@@ -1,18 +1,28 @@
 Palmwire Money
 
+Transaction receipt
+
 Successful
+
+Completed 20 Nov 2026, 14:32 UTC
+
+Amount sent (USD)
 
 $42.00
 
-SENT TO GRACE BANDA.
+SENT TO GRACE BANDA
 
-No further action is needed. Keep this receipt for your records.
+Payment complete. Keep this receipt for your records.
 
-To
+PAYMENT DETAILS
 
-Grace Banda (+260 97 123 4567)
+Recipient
 
-From
+Grace Banda
+
++260 97 123 4567
+
+Sender
 
 Daniel Mensah
 
@@ -20,17 +30,21 @@ Network
 
 Airtel Money
 
+CHARGES
+
 Fee
 
 $0.50
 
-Total
+Total debited
 
 $42.50
 
-Date
+TRANSACTION DETAILS
 
-20 Nov 2026, 14:32
+Initiated
+
+20 Nov 2026, 14:32 UTC
 
 Reference
 
@@ -40,6 +54,8 @@ Note
 
 Lunch money
 
-Need help? support@palmwire.example
+Need help? Quote your transaction reference.
+
+support@palmwire.example (mailto:support@palmwire.example?subject=Payment%20enquiry%3A%20MP-20261120-0042)
 
 Palmwire Money · Send. Save. Smile.

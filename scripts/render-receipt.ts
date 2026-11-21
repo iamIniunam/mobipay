@@ -1,13 +1,12 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { render } from "@hyper-elements/react";
 import { renderPdf } from "@hyper-elements/react/pdf";
-import { renderImage } from "@hyper-elements/react/image";
+import { renderReceiptImage } from "../src/receipt/image";
 import { inCurrency, sampleTransactions } from "../src/receipt/sample";
 import { brands, brandSlug } from "../src/receipt/brands";
 import type { Currency } from "../src/receipt/types";
 import {
     emailReceipt,
-    imageReceipt,
     pageReceipt,
     pdfReceipt,
 } from "../src/receipt/outputs";
@@ -42,7 +41,7 @@ for (const brand of brands) {
             const { pdf } = await renderPdf(pdfReceipt(t, brand), { fonts });
             writeFileSync(`${dir}/receipt.pdf`, pdf);
 
-            const { image } = await renderImage(imageReceipt(t, brand), { fonts, strict: true });
+            const { image } = await renderReceiptImage(t, brand, { fonts });
             writeFileSync(`${dir}/receipt.png`, image);
 
             console.log(dir, "ok");
