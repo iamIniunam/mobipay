@@ -61,4 +61,4 @@ Hyper Elements Template Challenge, deadline Nov 29 2026 23:59 UTC. One mobile mo
 - I'm a Flutter dev new to React/JS: explain step by step with Dart analogies. Keep answers compact.
 
 ## Now
-M4b: switchers and output tabs done; demo page still unstyled. Then M5.
+Repo cleaned. Next: style the demo page (replace Vite CSS), BASE_URL fix + deploy, README, submit.
