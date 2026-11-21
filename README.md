@@ -13,6 +13,12 @@ One mobile money receipt, rendered as an **email, web page, PDF and PNG** from a
 - **Mobile money context.** Network (MTN MoMo, OPay), recipient number, amounts stored in minor units and shown as ₵ (GHS), ₦ (NGN) or $ (USD).
 - **Brandable.** A `Brand` is a name, an accent colour, a support contact and a footer line. Two samples are included: MobiPay and the fictional Palmwire Money.
 
+## Try the demo
+
+Choose a status, currency and brand, then switch between Email, Web, PDF and PNG. Email and web previews render live; the download links use matching pre-generated samples. Email includes HTML and plain-text downloads. PDF includes a direct open link for browsers that cannot embed a PDF viewer.
+
+The demo handles loading and preview errors, and downloads have filenames that identify the brand, currency and status.
+
 ## Screenshots
 
 <img src="docs/hero.png" alt="The demo page" width="480">
@@ -102,7 +108,7 @@ Other scripts: `npm run build`, `npm run preview`, `npm run lint` and `npm test`
 To regenerate every PDF, PNG and email/web file:
 
 ```bash
-rm -rf public/previews && npx tsx scripts/render-receipt.ts
+npm run render
 ```
 
 ## Make it your own
@@ -125,10 +131,11 @@ For PNG exports, import `renderReceiptImage` from `src/receipt/image.ts` in Node
 
 ## Deployment
 
-Pushing to `main` runs `.github/workflows/deploy.yml`, which builds the site and publishes it to GitHub Pages. The site lives under `/mobipay/`, so `vite.config.ts` sets `base: '/mobipay/'` and the demo reads preview files through `import.meta.env.BASE_URL`. If you fork under another name, change `base`.
+Pull requests run lint, receipt tests, all 24 export variants and the production build. Pushing to `main` runs the same checks in `.github/workflows/deploy.yml`, regenerates every preview, and uploads the built site. A separate deployment job publishes that completed artifact to GitHub Pages. The site lives under `/mobipay/`, so `vite.config.ts` sets `base: '/mobipay/'` and the demo reads preview files through `import.meta.env.BASE_URL`. If you fork under another name, change `base`.
 
 ## Notes
 
 - Brands, people, phone numbers and email addresses are fictional.
 - Inter is not embedded in the email HTML, so email clients without Inter fall back to Arial. The demo page links Inter into its preview frame.
-- Inter is licensed under the SIL Open Font License 1.1.
+- Project source is licensed under [MIT](LICENSE).
+- Inter is licensed under the SIL Open Font License 1.1; the copyright notice and full license are included in [fonts/OFL.txt](fonts/OFL.txt) and the deployed font folder.

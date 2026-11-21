@@ -1,6 +1,7 @@
 {
   "name": "mobipay",
   "private": true,
+  "license": "MIT",
   "version": "0.0.0",
   "type": "module",
   "scripts": {
@@ -8,7 +9,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "node --import tsx --test scripts/receipt.test.ts"
+    "test": "node --import tsx --test scripts/receipt.test.ts",
+    "render": "tsx scripts/render-receipt.ts"
   },
   "dependencies": {
     "@hyper-elements/react": "^0.5.2",
