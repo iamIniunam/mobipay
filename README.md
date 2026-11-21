@@ -1,98 +1,54 @@
 # MobiPay
 
-One mobile money receipt, rendered as an **email, web page, PDF and PNG** from a single `Transaction`. Built with Hyper Elements for the Hyper Elements Template Challenge.
+A mobile money receipt template that renders an **email, web page, PDF and PNG** from one `Transaction` and one shared Hyper Elements body. It handles successful, pending, failed and reversed payments, with wording that explains what happened and what the sender should do next.
 
-**Live demo: https://iaminiunam.github.io/mobipay/**
+[Live demo](https://iaminiunam.github.io/mobipay/) · [Sample PDF](https://iaminiunam.github.io/mobipay/previews/mobipay/GHS/successful/receipt.pdf) · [Sample PNG](https://iaminiunam.github.io/mobipay/previews/mobipay/GHS/successful/receipt.png)
 
-![MobiPay demo: the same receipt across statuses, brands and output formats](docs/preview.gif)
+![MobiPay walkthrough: email and web previews, payment statuses, refund details and another brand](docs/preview.gif)
 
 ## What it does
 
-- **One transaction, four outputs.** Email (HTML and plain text), web page, PDF and PNG all come from the same receipt definition.
-- **Wording follows the status.** Successful, pending, failed and reversed each get their own summary line and next-step callout. Failed and reversed receipts show a reason and mute the amount. Recorded debits and refunds are shown explicitly; an unknown amount is never treated as zero.
-- **Mobile money context.** Network (MTN MoMo, OPay), recipient number, amounts stored in minor units and shown as ₵ (GHS), ₦ (NGN) or $ (USD).
-- **Brandable.** A `Brand` is a name, an accent colour, a support contact and a footer line. Two samples are included: MobiPay and the fictional Palmwire Money.
+- **One receipt, four outputs.** Email includes HTML and plain text. Web, PDF and PNG use the same receipt body.
+- **Status-specific wording.** Pending payments discourage duplicate transfers. Failed payments confirm that nothing was debited only when the data records a zero debit. Reversed payments show confirmed principal and fee refunds separately.
+- **Useful receipt details.** Recipient name and number, sender, network, fees, reference, note and timestamps. Initiation, completion and reversal are separate events; every displayed time is labelled UTC.
+- **Mobile money samples.** MTN MoMo and OPay examples, with GHS, NGN and USD amounts stored in minor units. The currency selector changes fictional sample scenarios; it does not perform currency conversion.
+- **Brand settings.** Name, accent colour, support contact and footer text. Two sample brands are included, with a support link that puts the reference in the email subject.
 
-## Try the demo
+## See the outputs
 
-Choose a status, currency and brand, then switch between Email, Web, PDF and PNG. Email and web previews render live; the download links use matching pre-generated samples. Email includes HTML and plain-text downloads. PDF includes a direct open link for browsers that cannot embed a PDF viewer.
+The same successful transaction in each format. Email and web are browser previews; the PDF image comes from the exported document.
 
-The demo handles loading and preview errors, and downloads have filenames that identify the brand, currency and status.
+[![Email, web, PDF and PNG from the same transaction](docs/formats.png)](docs/formats.png)
 
-## Screenshots
+More screenshots: [all four statuses](docs/statuses.png), [brand and currency variants](docs/variants.png), [phone layout](docs/mobile.png), and [full demo page](docs/hero.png).
 
-<img src="docs/hero.png" alt="The demo page" width="480">
-
-The four statuses (MobiPay, GHS):
-
-![Successful, pending, failed and reversed receipts](docs/statuses.png)
-
-Another brand and currency (MobiPay in USD, Palmwire Money in NGN):
-
-![MobiPay USD pending and Palmwire Money NGN reversed](docs/variants.png)
+In the [demo](https://iaminiunam.github.io/mobipay/), choose a status, currency and brand, then switch formats. Download the matching HTML, plain text, PDF or PNG. A direct PDF link is available when the browser cannot display the embedded viewer.
 
 ## How Hyper Elements is used
 
-The receipt body is written once, in `src/receipt/body.ts`, as a function of the transaction, the brand and a font family. It is built from Hyper Elements components (`Column`, `Row`, `Heading`, `Text`). Each output wraps that same body in a different root component, and a renderer turns it into a file:
+[`src/receipt/body.ts`](src/receipt/body.ts) defines the receipt with `Column`, `Row`, `Heading`, `Text` and `Link`. The transaction, brand and font family are inputs to that function. Each output wraps the body in its own root:
 
-| Output | Root component | Renderer | Result |
+| Output | Root | Renderer | Result |
 | --- | --- | --- | --- |
-| Email | `Email` (600 px) | `render()` from `@hyper-elements/react` | `{ html, text }` |
-| Web page | `Page` | `render()` | `{ html, text }` |
-| PDF | `Document` | `renderPdf()` from `@hyper-elements/react/pdf` | PDF bytes |
-| PNG | `Canvas` (640 px wide) | `renderImage()` from `@hyper-elements/react/image` | PNG bytes |
+| Email | `Email` (600 px) | `render()` | HTML and plain text |
+| Web | `Page` (640 px) | `render()` | HTML |
+| PDF | `Document` (A4) | `renderPdf()` | PDF bytes |
+| PNG | `Canvas` (640 px) | `layoutImage()`, then `renderImage()` | PNG bytes fitted to the content |
+
+The wrappers are in [`outputs.ts`](src/receipt/outputs.ts). [`renderReceiptImage()`](src/receipt/image.ts) measures the body using the supplied fonts before creating the final PNG, with strict overflow checking enabled.
 
 ```ts
-// src/receipt/outputs.ts
-export const emailReceipt = (t: Transaction, brand: Brand = mobipayBrand) =>
-  h(Email, { width: 600 }, receiptBody(t, brand, WEB_FONT));
-
-export const pdfReceipt = (t: Transaction, brand: Brand = mobipayBrand) =>
-  h(Document, null, receiptBody(t, brand, FILE_FONT));
-```
-
-```ts
-// scripts/render-receipt.ts
+// scripts/render-receipt.ts loads the fonts and runs this for every sample.
 const email = await render(emailReceipt(t, brand));
 const { pdf } = await renderPdf(pdfReceipt(t, brand), { fonts });
 const { image } = await renderReceiptImage(t, brand, { fonts });
 ```
 
-`render()` also runs in the browser, which is how the demo draws the email and web receipts live. The PDF and PNG renderers need Node, so those files are pre-rendered by `scripts/render-receipt.ts` and committed in `public/previews/` (2 brands × 3 currencies × 4 statuses = 24 receipts).
-
-Things worth knowing if you build on this:
-
-- Style props that work in every output (email HTML, PDF, PNG): `backgroundColor`, `height`, `borderRadius` and `padding` on `Column`; percentage widths on `Row` and `Column`; `textAlign` on `Text`.
-- Some props are silently ignored: `alignSelf`, `textDecoration`, and the colour and thickness props on `Divider`. Hairline rules here are thin `Column`s with a background colour.
-- A `Canvas` is transparent unless you give it `style={{ backgroundColor }}`, so the PNG sets white explicitly.
-- `renderImage(..., { strict: true })` throws, with the pixel amount, when content would be cut off. `renderReceiptImage()` uses `layoutImage()` with the actual fonts to measure the receipt before rendering the PNG at its content height.
-- PDF and PNG fonts must be TTF, OTF or WOFF files (not WOFF2) passed to the renderer. Email and web use the font stack `Inter, Arial, Helvetica, sans-serif`.
-
-## Project structure
-
-```
-src/
-  App.tsx              demo page: output tabs, status / currency / brand selects
-  index.css            demo page styles
-  receipt/
-    types.ts           Transaction, TransactionStatus, Currency, Brand
-    brands.ts          the two sample brands
-    sample.ts          one sample transaction per status and currency (not FX conversion)
-    format.ts          money and date formatting
-    status.ts          per-status wording
-    theme.ts           colours and status styles
-    body.ts            the receipt, built from Hyper Elements components
-    outputs.ts         emailReceipt, pageReceipt, pdfReceipt, imageReceipt
-    image.ts           Node-only PNG export, measured using actual font metrics
-scripts/
-  render-receipt.ts    renders PDF and PNG (and email/web files) into public/previews
-public/previews/       pre-rendered receipts, one folder per brand / currency / status
-fonts/                 Inter TTFs used by the PDF and PNG renderers
-```
+`render()` runs in the browser for the live email and web previews. The PDF and PNG renderers run in Node. Downloads use the pre-generated files in `public/previews/`: 2 brands × 3 currencies × 4 statuses = 24 sample combinations, each with email HTML, plain text, web HTML, PDF and PNG files.
 
 ## Run it locally
 
-You need Node 22 and npm. On Windows, use Git Bash (or `npm.cmd` in PowerShell).
+Use Node 22 and npm. In PowerShell, use `npm.cmd` if `npm` is blocked by the shell's execution policy.
 
 ```bash
 git clone https://github.com/iamIniunam/mobipay.git
@@ -101,41 +57,70 @@ npm ci
 npm run dev
 ```
 
-Open the URL Vite prints (`http://localhost:5173/mobipay/`).
+Open the URL Vite prints, usually `http://localhost:5173/mobipay/`.
 
-Other scripts: `npm run build`, `npm run preview`, `npm run lint` and `npm test`. Tests cover debit wording, partial and unknown refunds, timestamps, sample currencies, optional details and long-content exports.
-
-To regenerate every PDF, PNG and email/web file:
-
-```bash
-npm run render
-```
+| Command | Purpose |
+| --- | --- |
+| `npm run render` | Regenerate all 24 sample combinations |
+| `npm test` | Check transaction wording, refund totals, timestamps and long-content exports |
+| `npm run lint` | Run ESLint |
+| `npm run build` | Type-check and create the production site |
+| `npm run preview` | Serve the production build locally |
 
 ## Make it your own
 
-- **New brand:** add a `Brand` to `src/receipt/brands.ts` and include it in `brands`.
-- **New currency:** extend `Currency` in `types.ts`, then add its symbol in `format.ts` and sample amounts in `sample.ts`.
-- **New wording:** edit `STATUS_COPY` in `status.ts`.
+- Add a brand in [`brands.ts`](src/receipt/brands.ts). Include it in `brands` for the demo and export script.
+- Supply your own [`Transaction`](src/receipt/types.ts) to an output function, or edit [`sample.ts`](src/receipt/sample.ts) to change the demo scenarios.
+- Edit [`status.ts`](src/receipt/status.ts) for wording and [`theme.ts`](src/receipt/theme.ts) for status colours.
+- Regenerate the previews after changing the template or samples.
 
-Then regenerate the previews with the command above.
+Keep amounts as integers in the smallest currency unit: `12550` is ₵125.50. `amountMinor` is the requested payment amount and `feeMinor` is the payment fee. Supply `debitedMinor` from the wallet record to show **Total debited**; a failed status alone does not establish whether money was debited.
 
-## Transaction facts
+`createdAt` records initiation. Supply `completedAt` or `reversedAt` when available; the appropriate event appears beside the status.
 
-`amountMinor` is the requested payment amount; `feeMinor` is the payment fee. Supply `debitedMinor` from the wallet record to show **Total debited**. A failed status alone does not establish whether money was debited.
+For a reversed payment, `refundedAmountMinor` and `refundedFeeMinor` record the confirmed principal and fee returned. Zero means confirmed zero; an omitted field is unknown. **Total refunded** appears only when both parts are known. This supports partial refunds and fees that were not returned without implying a full refund.
 
-`createdAt` is initiation time. Supply `completedAt` or `reversedAt` when available; the receipt labels the appropriate event near the status and formats every timestamp in UTC.
+For PNG exports in Node, call `renderReceiptImage()` from `src/receipt/image.ts`. `imageReceipt()` is the underlying measuring canvas, not the fitted export.
 
-For a reversed payment, `refundedAmountMinor` and `refundedFeeMinor` record the confirmed principal and fee returned. A zero is confirmed zero; an omitted field is unknown. **Total refunded** is shown only when both parts are known, so a partial refund or retained fee is represented accurately. The currency selector switches fictional sample scenarios; it does not convert real transactions.
+## Rendering notes
 
-For PNG exports, import `renderReceiptImage` from `src/receipt/image.ts` in Node. It measures the shared body with the supplied fonts and returns the fitted image. `imageReceipt()` is the underlying measuring canvas, not the fitted export.
+These notes apply to the installed `@hyper-elements/react` version, **0.5.2**.
 
-## Deployment
+- Email and web support phone styles. Responsive padding and amount sizing are enabled for those outputs; PDF and PNG use the shared body's fixed layout.
+- PDF and PNG receive the bundled Inter TTF files explicitly. Email uses `Inter, Arial, Helvetica, sans-serif`; the demo loads Inter into its preview frame.
+- Thin `Column` blocks draw the rules. The `Canvas` sets a white background explicitly, and measured layout plus strict image rendering catches overflow.
+- The email screenshots show browser rendering. They do not establish compatibility with every email client.
 
-Pull requests run lint, receipt tests, all 24 export variants and the production build. Pushing to `main` runs the same checks in `.github/workflows/deploy.yml`, regenerates every preview, and uploads the built site. A separate deployment job publishes that completed artifact to GitHub Pages. The site lives under `/mobipay/`, so `vite.config.ts` sets `base: '/mobipay/'` and the demo reads preview files through `import.meta.env.BASE_URL`. If you fork under another name, change `base`.
+## Checks and deployment
 
-## Notes
+Pull requests run lint, receipt tests, all 24 export variants and the production build. The tests cover unknown versus zero debits, partial refunds, fee refunds, UTC timestamps, sample currencies, optional details and long-content exports.
 
-- Brands, people, phone numbers and email addresses are fictional.
-- Inter is not embedded in the email HTML, so email clients without Inter fall back to Arial. The demo page links Inter into its preview frame.
-- Project source is licensed under [MIT](LICENSE).
-- Inter is licensed under the SIL Open Font License 1.1; the copyright notice and full license are included in [fonts/OFL.txt](fonts/OFL.txt) and the deployed font folder.
+Pushing to `main` runs the same checks, regenerates the preview files and builds the site. A separate job deploys the completed artifact to GitHub Pages. The site lives under `/mobipay/`; change `base` in `vite.config.ts` if your fork uses another path.
+
+## Project structure
+
+```text
+src/
+  App.tsx              demo controls, downloads and previews
+  receipt/
+    types.ts           transaction and brand types
+    brands.ts          sample brands
+    sample.ts          sample transactions and currency scenarios
+    format.ts          money and UTC timestamps
+    status.ts          wording and event labels
+    theme.ts           status colours
+    body.ts            shared receipt layout
+    outputs.ts         email, page, document and canvas roots
+    image.ts           measured PNG export for Node
+scripts/
+  render-receipt.ts     regenerate all sample files
+  receipt.test.ts       receipt regression checks
+public/previews/        pre-generated files
+fonts/                  Inter TTF files and license
+```
+
+## Credits and license
+
+Built with React, TypeScript, Vite, Hyper Elements and Inter. I used Claude while building the first version, and Codex for review, refinements, testing and submission preparation.
+
+Project source is licensed under [MIT](LICENSE). Inter uses the SIL Open Font License 1.1; the full notice is in [fonts/OFL.txt](fonts/OFL.txt) and the deployed font folder. People, contact details and brands in the samples are fictional. This demo does not process payments.
