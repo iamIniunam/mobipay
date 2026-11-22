@@ -116,11 +116,11 @@ scripts/
   render-receipt.ts     regenerate all sample files
   receipt.test.ts       receipt regression checks
 public/previews/        pre-generated files
-fonts/                  Inter TTF files and license
+public/fonts/           shared Inter TTF files, browser CSS and license
 ```
 
 ## Credits and license
 
 Built with React, TypeScript, Vite, Hyper Elements and Inter. I used Claude while building the first version, and Codex for review, refinements, testing and submission preparation.
 
-Project source is licensed under [MIT](LICENSE). Inter uses the SIL Open Font License 1.1; the full notice is in [fonts/OFL.txt](fonts/OFL.txt) and the deployed font folder. People, contact details and brands in the samples are fictional. This demo does not process payments.
+Project source is licensed under [MIT](LICENSE). Inter uses the SIL Open Font License 1.1; the full notice is in [public/fonts/OFL.txt](public/fonts/OFL.txt). People, contact details and brands in the samples are fictional. This demo does not process payments.

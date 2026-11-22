@@ -18,7 +18,7 @@ Hyper Elements Template Challenge, deadline Nov 29 2026 23:59 UTC. One mobile mo
 - renderPdf from "@hyper-elements/react/pdf" (Document root).
 - renderImage from "@hyper-elements/react/image" (Canvas root, PNG or SVG, Canvas takes width/height).
 - PDF/image need fonts passed in as TTF/OTF/WOFF (not WOFF2). Installed @react-pdf/renderer, satori, @resvg/resvg-js.
-- Fonts: fonts/Inter_18pt-{Regular,SemiBold,Bold}.ttf (weights 400/600/700).
+- Fonts: public/fonts/Inter_18pt-{Regular,SemiBold,Bold}.ttf (weights 400/600/700).
 - Working test scripts: render-test.mjs (email + page), outputs-test.mjs (PDF + PNG with Inter).
 - Components used so far: Email, Page, Document, Canvas, Column, Row, Heading, Text.
 - Exports checked Nov 20: Row, Divider, Section, Grid, Table/TableRow/TableCell, Button, Link, Image, Span, List/ListItem, Social, Svg + shapes, PageHeader/PageFooter, defineTheme/extendTheme/token.

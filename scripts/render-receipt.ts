@@ -18,7 +18,7 @@ const fontFiles: [string, number][] = [
 ];
 const fonts = fontFiles.map(([file, weight]) => ({
     family: "Inter",
-    src: readFileSync(`fonts/${file}`),
+    src: readFileSync(`public/fonts/${file}`),
     weight,
 }));
 

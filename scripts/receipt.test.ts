@@ -17,7 +17,7 @@ const fonts = [
     ["Inter_18pt-Regular.ttf", 400],
     ["Inter_18pt-SemiBold.ttf", 600],
     ["Inter_18pt-Bold.ttf", 700],
-].map(([file, weight]) => ({ family: "Inter", src: readFileSync(`fonts/${file}`), weight: Number(weight) }));
+].map(([file, weight]) => ({ family: "Inter", src: readFileSync(`public/fonts/${file}`), weight: Number(weight) }));
 
 test("a failed status does not imply a zero debit", () => {
     const failed = { ...sampleTransactions.failed, debitedMinor: undefined };
